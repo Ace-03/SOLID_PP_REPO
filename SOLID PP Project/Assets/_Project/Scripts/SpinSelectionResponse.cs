@@ -51,7 +51,7 @@ public class SpinSelectionResponse : MonoBehaviour, ISelectionResponse
         {
             spin.rotation = new Quaternion(0,0,0,0);
             spin.position = new Vector3(x, y, z);
-            spin.GetChild(0).gameObject.SetActive(true);
+            spin.GetChild(0).gameObject.SetActive(false);
         }
 
         settingValues = true;
