@@ -9,15 +9,17 @@ public class SpinSelectionResponse : MonoBehaviour, ISelectionResponse
     float smoothFactor = 10f;
 
     bool settingValues = true;
+    bool shouldRise;
 
-    Transform spinning;
+    //Transform spinning;
+
+    Transform spin;
 
     public void OnSelect(Transform selection)
     {
-        
-        var spin = selection.GetComponent<Transform>();
+        spin = selection.GetComponent<Transform>();
 
-        spinning = spin;
+        //spinning = spin;
 
         if (settingValues) 
         {
@@ -32,15 +34,15 @@ public class SpinSelectionResponse : MonoBehaviour, ISelectionResponse
         {
             spin.rotation = new Quaternion(Random.value, Random.value, Random.value, Random.value);
             spin.GetChild(0).gameObject.SetActive(true);
-            //spin.position = Vector3.Lerp(new Vector3(x,y,z), new Vector3(x,y+100,z), Time.deltaTime * smoothFactor);
+            shouldRise = true;
         }
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
-        if(!settingValues) 
+        if (shouldRise)
         {
-            spinning.position = Vector3.Lerp(new Vector3(x, y, z), new Vector3(x, y + 100, z), Time.deltaTime * smoothFactor);
+            spin.position = Vector3.Lerp(new Vector3(x, y, z), new Vector3(x, y + 50, z), Time.deltaTime * smoothFactor);
         }
     }
 
@@ -49,6 +51,7 @@ public class SpinSelectionResponse : MonoBehaviour, ISelectionResponse
         var spin = selection.GetComponent<Transform>();
         if (spin != null)
         {
+            shouldRise = false;
             spin.rotation = new Quaternion(0,0,0,0);
             spin.position = new Vector3(x, y, z);
             spin.GetChild(0).gameObject.SetActive(false);
